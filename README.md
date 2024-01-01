@@ -12,6 +12,9 @@ convert already many shaders, currently only shaders without textures and other 
 plugins work, but some still cause a crash of OpenEmu and I did not have the time to investigate the cause of the
 crashes or to test every shader plugin. The current version is only tested on macOS 14.1 (M3) and OpenEmu 2.4.1.
 
+If you want to help with this project, feel free to open an issue or a pull request. I am especially interested in
+fixing the remaining crashes and adding support for shaders with textures and other resources.
+
 The shaders included in this repository are taken from Retroarch version 1.16.0. You can replace the folder 
 `shaders_slang` with the one from your Retroarch installation to use newer shaders.
 
