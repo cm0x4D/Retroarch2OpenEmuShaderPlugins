@@ -1,0 +1,2 @@
+#reference "../tube-rotation/$CORE-REQ-ROT$.params"
+#reference "../core-defaults/$VID-DRV$_$CORE$.params"
