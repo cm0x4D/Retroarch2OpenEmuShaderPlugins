@@ -21,7 +21,7 @@ func init() {
 type Preset interface {
 	FilePath() string
 	PresetName() string
-	SaveAsOpenEmuPlugin(outputFolder string) error
+	SaveAsOpenEmuPlugin(outputFolder string, keepFolders bool) error
 }
 
 type preset struct {
@@ -71,7 +71,7 @@ func (s *preset) PresetName() string {
 	return s.presetName
 }
 
-func (s *preset) SaveAsOpenEmuPlugin(outputFolder string) error {
+func (s *preset) SaveAsOpenEmuPlugin(outputFolder string, keepFolders bool) error {
 	shaderFiles, err := s.parse()
 	if err != nil {
 		return err
@@ -81,7 +81,9 @@ func (s *preset) SaveAsOpenEmuPlugin(outputFolder string) error {
 	if err != nil {
 		return err
 	}
-	defer s.removeShaderPresetFolder(outputFolder)
+	if !keepFolders {
+		defer s.removeShaderPresetFolder(outputFolder)
+	}
 
 	for _, shaderFile := range shaderFiles {
 		err = copyFile(filepath.Join(filepath.Dir(s.inputFilePath), shaderFile), filepath.Join(outputFolder, s.presetName, "shaders", filepath.Base(shaderFile)))
@@ -110,11 +112,13 @@ func (s *preset) parse() ([]string, error) {
 
 	lines := strings.Split(string(content), "\n")
 
+	// TODO: make recursive references working
 	for i, _ := range lines {
 		line := lines[i]
 		referenceMatches := shaderPresetReferenceLine.FindStringSubmatch(line)
 		if len(referenceMatches) >= 1 {
-			referencedLines, err := s.loadPresetReference(referenceMatches[1])
+			referencedFilePath := referenceMatches[1]
+			referencedLines, err := s.loadPresetReference(referencedFilePath)
 			if err != nil {
 				return nil, err
 			}
@@ -127,13 +131,15 @@ func (s *preset) parse() ([]string, error) {
 	for _, line := range lines {
 		matches := shaderIncludeLine.FindStringSubmatch(line)
 		if len(matches) >= 2 {
-			shaderFiles = append(shaderFiles, strings.Trim(matches[2], `"`))
+			shaderFile := strings.Trim(matches[2], `"`)
+			shaderFiles = append(shaderFiles, shaderFile)
 		}
 
 		if strings.Contains(line, "textures") {
 			return nil, fmt.Errorf("shaders with textures are not supported")
 		}
 
+		// TODO: remove when recursive references are working
 		if strings.Contains(line, "#reference") {
 			return nil, fmt.Errorf("shaders with multiple references are not supported")
 		}
@@ -199,7 +205,10 @@ func (s *preset) savePatchedPreset(to string) error {
 	for _, line := range s.presetLines {
 		matches := shaderIncludeLine.FindStringSubmatch(line)
 		if len(matches) >= 2 {
-			_, err = destination.WriteString(fmt.Sprintf("shader%s = shaders/%s\n", matches[1], filepath.Base(matches[2])))
+			shaderNumber := strings.Trim(matches[1], `"`)
+			shaderFile := strings.Trim(matches[2], `"`)
+
+			_, err = destination.WriteString(fmt.Sprintf("shader%s = shaders/%s\n", shaderNumber, filepath.Base(shaderFile)))
 			if err != nil {
 				return err
 			}
