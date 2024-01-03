@@ -1,5 +1,7 @@
 # Retroarch2OpenEmuShaderPlugins
 
+[![Go](https://github.com/cm0x4D/Retroarch2OpenEmuShaderPlugins/actions/workflows/go.yml/badge.svg?branch=main)](https://github.com/cm0x4D/Retroarch2OpenEmuShaderPlugins/actions/workflows/go.yml)
+
 ## Overview
 
 This project aims to bring as many shaders as possible from the current Retroarch slang shader folder to OpenEmu by 
