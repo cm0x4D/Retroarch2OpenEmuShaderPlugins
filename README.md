@@ -1,6 +1,6 @@
 # Retroarch2OpenEmuShaderPlugins
 
-[![Go](https://github.com/cm0x4D/Retroarch2OpenEmuShaderPlugins/actions/workflows/go.yml/badge.svg?branch=main)](https://github.com/cm0x4D/Retroarch2OpenEmuShaderPlugins/actions/workflows/go.yml)
+[![Latest (main)](https://github.com/cm0x4D/Retroarch2OpenEmuShaderPlugins/actions/workflows/latest.yml/badge.svg?branch=main)](https://github.com/cm0x4D/Retroarch2OpenEmuShaderPlugins/actions/workflows/latest.yml)
 
 ## Overview
 
