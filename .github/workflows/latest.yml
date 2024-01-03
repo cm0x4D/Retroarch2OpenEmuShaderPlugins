@@ -21,10 +21,8 @@ jobs:
       run: make build-tested
 
     - name: Release
-      uses: "marvinpinto/action-automatic-releases@latest"
+      uses: softprops/action-gh-release@v1
       with:
-        repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: "latest"
+        name: latest
         prerelease: true
-        title: "Latest build from main branch"
         files: plugins_tested/*.oeshaderplugin
