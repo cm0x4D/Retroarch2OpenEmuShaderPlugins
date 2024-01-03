@@ -1,6 +1,6 @@
 # Retroarch2OpenEmuShaderPlugins
 
-[![Latest (main)](https://github.com/cm0x4D/Retroarch2OpenEmuShaderPlugins/actions/workflows/latest.yml/badge.svg?branch=main)](https://github.com/cm0x4D/Retroarch2OpenEmuShaderPlugins/actions/workflows/latest.yml)
+[![](https://github.com/cm0x4D/Retroarch2OpenEmuShaderPlugins/actions/workflows/latest.yml/badge.svg?branch=main)](https://github.com/cm0x4D/Retroarch2OpenEmuShaderPlugins/actions/workflows/latest.yml)
 
 ## Overview
 
@@ -29,7 +29,20 @@ fixing the remaining crashes and adding support for shaders with textures and ot
 The shaders included in this repository are taken from Retroarch version **1.16.0**. You can replace the folder 
 `shaders_slang` with the one from your Retroarch installation to use newer shaders.
 
-## Requirements
+## Install shader plugins
+
+You can download a given **version** or the **latest** (build from main branch) shader plugins from the 
+[releases page](https://github.com/cm0x4D/Retroarch2OpenEmuShaderPlugins/releases). Each shader is provided as an
+`*.oeshaderplugin` file. To install a shader plugin, just drag the shader plugin into the OpenEmu window. The shader
+plugin will be installed automatically. That is how things are supposed to work on a Mac ;-).
+
+## Build
+
+There is no need to build the shaders yourself, you can download the latest build from the releases page. Note that only 
+tested shaders are included in the release builds, so you will not get all shaders that are available. If you want
+to build the shaders yourself or try untested shader plugins, you can follow the instructions below.
+
+### Requirements
 
 In order to build the OpenEmu shader plugins, you need to have the following tools installed:
 
@@ -37,7 +50,7 @@ In order to build the OpenEmu shader plugins, you need to have the following too
 - [make](https://www.gnu.org/software/make/)
 - [go](https://golang.org/)
 
-## How to build the shader plugins
+### How to build the shader plugins
 
 1. Clone this repository
 
@@ -61,8 +74,3 @@ All OpenEmu shader plugins are now located in the `plugins` directory. All teste
 
 If you want only to build the tested shaders, you can run `make build-tested` instead of just `make`. If you want to 
 build all shaders without the tested shaders, you can run `make build-all`.
-
-## How to install the shader plugins
-
-Just drag the shader plugins into the OpenEmu window. The shader plugins will be installed automatically. That is how 
-things work on a Mac ;-).
